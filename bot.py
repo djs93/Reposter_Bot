@@ -8,7 +8,7 @@ class Client(discord.Client):
         for channelID in channels:
             channel = self.get_channel(channelID)
             print("Sending to " + channel.name +" in " + channel.guild.name)
-            await channel.send(message[0])
+            await channel.send(message)
 
     async def on_ready(self):
         print('Logged on as {0}!'.format(self.user))
@@ -19,9 +19,9 @@ class Client(discord.Client):
             keys = toChannels.keys()
             for key in keys:
                 if parts[0] == key:
-                    await self.send_messages(key, parts[1:])
+                    await self.send_messages(key, ":".join(parts[1:]))
                     return
-            await self.send_messages("general", [message.content])
+            await self.send_messages("general", message.content)
 
 client = Client()
 client.run(token, bot=False)
